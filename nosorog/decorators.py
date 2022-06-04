@@ -23,6 +23,7 @@ def copy_dicts(deep_copy=False):
 
 
 def protect_ids(id_names=None):
+    # Convert all the items in id)names to int or throw TypeError
     def decorator(func):
         def wrap(*args, **kwargs):
             if id_names and isinstance(id_names, list) and set([type(name) for name in id_names]) != {str}:
@@ -44,6 +45,8 @@ def protect_ids(id_names=None):
 
 
 def protect_private(allowed_list=None, silent=False):
+    # Makes method not accessible from the method which not in allowed_list.
+    # Return None instead of throwing Exception if silent is True
     def decorator(func):
         def wrap(*args, **kwargs):
 
@@ -70,6 +73,7 @@ def protect_private(allowed_list=None, silent=False):
 
 
 def protected_call(from_method=None, from_file=None):
+    # limits the places where the method can be called from.
     def decorator(func):
         def wrapper(*args, **kwargs):
             fn = inspect.stack()
