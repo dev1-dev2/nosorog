@@ -1,6 +1,6 @@
 import os
 import unittest
-from nosorog.decorators import copy_dicts, protect_private, protected_call, protect_ids
+from nosorog.decorators.decorators import copy_dicts, protect_private, protected_call, protect_ids
 
 
 class TestCopyDictDecorator(unittest.TestCase):

@@ -23,7 +23,7 @@ def copy_dicts(deep_copy=False):
 
 
 def protect_ids(id_names=None):
-    # Convert all the items in id)names to int or throw TypeError
+    # Convert all the items in id_names to int or throw TypeError
     def decorator(func):
         def wrap(*args, **kwargs):
             if id_names and isinstance(id_names, list) and set([type(name) for name in id_names]) != {str}:

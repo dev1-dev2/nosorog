@@ -1,7 +1,7 @@
 # Nosorog
 ## Introdaction
 
-An assertive security framework.
+An assertive security library.
 
 ## Installing
 
