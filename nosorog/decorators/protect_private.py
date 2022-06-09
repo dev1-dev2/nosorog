@@ -1,5 +1,4 @@
 import inspect
-import re
 
 from nosorog.decorators.base_decorator import BaseDecorator
 from nosorog.decorators.mixins.decorator_messages import DecoratorMessages
