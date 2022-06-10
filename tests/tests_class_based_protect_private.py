@@ -1,4 +1,4 @@
-from tests.testcases.testcases_classbased_private import MangledNames
+from tests.testcases.testcases_class_based_private import MangledNames
 from nosorog.decorators.mixins.decorator_messages import DecoratorMessages
 
 import unittest
