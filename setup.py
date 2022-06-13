@@ -45,7 +45,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(here, "nosorog", "__version__.py"), mode="r", encoding="utf-8") as f:
     exec(f.read(), about)
 
-with open("README.md", "r", "utf-8") as f:
+with open("README.md", mode="r", encoding="utf-8") as f:
     readme = f.read()
 
 setup(
