@@ -29,6 +29,4 @@ jobs:
     - name: Install package
       run: python setup.py install
     - name: Run tests
-      run: |
-          cd nosorog
-          python -m unittest discover -s tests  -p 'tests_*.py'
+      run: python -m unittest discover -s tests  -p 'tests_*.py'
