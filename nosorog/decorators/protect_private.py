@@ -1,7 +1,8 @@
 import inspect
 
 from nosorog.decorators.base_decorator import BaseDecorator
-from nosorog.decorators.mixins.decorator_messages import DecoratorMessages
+from nosorog.exceptions.mixins.exception_messages import ExceptionMessages
+from nosorog.exceptions import CallByMangledNameError, CallByWrongMethodError
 
 
 class ProtectPrivate(BaseDecorator):
@@ -51,27 +52,27 @@ class ProtectPrivate(BaseDecorator):
     def block_if_not_self(self):
         fn = inspect.stack()
         if not bool(self.search_caller(f'self.{self.func.__name__}(', fn)):
-            raise Exception(DecoratorMessages.use_self)
+            raise Exception(ExceptionMessages.use_self)
 
     def block_if_not_in_list(self):
         fn = inspect.stack()
         if self.search_caller(f'.{self.func.__name__}(', fn) not in self.attrs:
-            raise Exception(DecoratorMessages.protected_from_not_private_call)
+            raise CallByWrongMethodError
 
     def block_if_wrong_method(self):
         fn = inspect.stack()
         if self.search_caller(f'.{self.func.__name__}(', fn) != self.attrs:
-            raise Exception(DecoratorMessages.protected_from_not_private_call)
+            raise CallByWrongMethodError
 
     def block_if_mangled(self):
         fn = inspect.stack()
         if self.search_caller(f'.{self.mangled_name}(', fn):
-            raise Exception(DecoratorMessages.mangled_call_blocked)
+            raise CallByMangledNameError
 
     @staticmethod
     def block_silently(ex):
         # catch Exception, compare it with DecoratorMessages, return None if message in list
-        if str(ex) in DecoratorMessages.list():
+        if str(ex) in ExceptionMessages.list():
             return
         else:
             raise ex
@@ -85,7 +86,7 @@ class ProtectPrivate(BaseDecorator):
         return lambda func: cls(func=func, attrs=method, protection_method='block_if_wrong_method')
 
     @classmethod
-    def call_from(cls, methods):  # def from_methods
+    def call_from(cls, methods):
         return lambda func: cls(func=func, attrs=methods, protection_method='block_if_not_in_list')
 
     @classmethod
