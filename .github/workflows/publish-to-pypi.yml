@@ -1,18 +1,14 @@
-name: Publish Python distributions to TestPyPI
+name: Publish Python distributions to PyPI
 
 on:
-  push:
-    branches:
-      - "releases"
-  pull_request:
-    branches:
-      - "releases"
+  release:
+    types: [created]
 
   workflow_dispatch:
 
 jobs:
   build-n-publish:
-    name: Build and publish Python distributions to TestPyPI
+    name: Build and publish Python distributions to PyPI and TestPyPI
     runs-on: ubuntu-18.04
 
     steps:
@@ -27,8 +23,6 @@ jobs:
         python3 -m pip install setuptools wheel twine
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         python3 setup.py install
-    - name: Run tests
-      run: python -m unittest discover -s tests  -p 'tests_*.py'
     - name: Install pypa/build
       run: >-
         python -m
@@ -44,11 +38,11 @@ jobs:
         --outdir dist/
         .
 
-    - name: Publish distribution to Test PyPI
+    - name: Publish distribution to PyPI
+      if: startsWith(github.ref, 'refs/tags')
       uses: pypa/gh-action-pypi-publish@master
       with:
         verbose: true
         print_hash: true
         user: __token__
-        password: ${{ secrets.TEST_PYPI_API_TOKEN }}
-        repository_url: https://test.pypi.org/legacy/
+        password: ${{ secrets.PYPI_API_TOKEN }}
