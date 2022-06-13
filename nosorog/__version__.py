@@ -1,7 +1,7 @@
 __title__ = "nosorog"
 __description__ = "An assertive security library."
 __url__ = "https://nosorog.readthedocs.io"
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __author__ = "Vyacheslav Lobanov"
 __author_email__ = "bartoldo@bk.ru"
 __license__ = "Apache 2.0"
