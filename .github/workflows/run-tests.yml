@@ -31,4 +31,4 @@ jobs:
     - name: Run tests
       run: |
           cd nosorog
-          python -m unittest discover -s ./tests  -p 'tests_*.py'
+          python -m unittest discover -s tests  -p 'tests_*.py'
