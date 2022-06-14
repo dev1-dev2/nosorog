@@ -7,7 +7,7 @@ class NosorogWrongPlaceCallError(NosorogWentWrongError, NosorogExceptionMessages
 
     def __init__(self, message=None, errors=None, **kwargs):
         if message is not None:
-            self.message = f'{self.protected_from_not_private_call} {message}'
+            self.message = f'{self.wrong_place} {message}'
         else:
-            self.message = self.protected_from_not_private_call
+            self.message = self.wrong_place
         super(NosorogWrongPlaceCallError, self).__init__(message=self.message, errors=errors, **kwargs)

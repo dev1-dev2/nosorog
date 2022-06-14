@@ -21,7 +21,7 @@ class TestProtectPrivateDecorator(unittest.TestCase, NosorogExceptionMessages):
         # @protect_private.call_from(methods=['public_func_2'])
         with self.assertRaises(NosorogWrongPlaceCallError, msg="Wrong type of Exception raised.") as context:
             MangledNames().public_func_3()
-        self.assertTrue(self.protected_from_not_private_call in str(context.exception), msg="Wrong Exception message.")
+        self.assertTrue(self.wrong_place in str(context.exception), msg="Wrong Exception message.")
 
     def test_protect_private_decorator_supports_allowed_methods_by_list_of_allowed(self):
         # @protect_private.call_from(methods=['public_func_2'])
@@ -31,12 +31,8 @@ class TestProtectPrivateDecorator(unittest.TestCase, NosorogExceptionMessages):
         # @protect_private.one_method('public_func_4')
         with self.assertRaises(NosorogWrongPlaceCallError, msg="Wrong type of Exception raised.") as context:
             MangledNames().public_func_5()
-        self.assertTrue(self.protected_from_not_private_call in str(context.exception), msg="Wrong Exception message.")
+        self.assertTrue(self.wrong_place in str(context.exception), msg="Wrong Exception message.")
 
     def test_protect_private_decorator_supports_only_one_method(self):
         # @protect_private.one_method('public_func_4')
         self.assertTrue(MangledNames().public_func_4() == 1, msg="Decorator does not work correctly.")
-
-    # def test_protect_private_decorator_intercepts_exceptions_of_decorator_and_returns_none(self):
-        # @protect_private.silent
-        # self.assertIsNone(MangledNames().public_func_6(), msg="Decorator does not work correctly.")
