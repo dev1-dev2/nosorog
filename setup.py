@@ -5,7 +5,7 @@ import unittest
 from setuptools import setup
 
 CURRENT_PYTHON = sys.version_info[:2]
-REQUIRED_PYTHON = (3, 7)
+REQUIRED_PYTHON = (3, 5)
 
 if CURRENT_PYTHON < REQUIRED_PYTHON:
     sys.stderr.write(
