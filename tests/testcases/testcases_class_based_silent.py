@@ -1,12 +1,12 @@
 from nosorog.decorators import silent
-from nosorog.exceptions.call_by_wrong_method_error import CallByWrongMethodError
+from nosorog.exceptions.nosorog_wrong_place_call_error import NosorogWrongPlaceCallError
 
 
 class ExceptionThrower:
 
     @silent
     def get_catchable_exception(self):
-        raise CallByWrongMethodError
+        raise NosorogWrongPlaceCallError
 
     @silent
     def get_aloud_exception(self):
