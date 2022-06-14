@@ -11,3 +11,7 @@ class ExceptionThrower:
     @silent
     def get_aloud_exception(self):
         raise Exception("This is not Nosorog Exception.")
+
+    @silent.include([TypeError])
+    def get_included_exception(self):
+        raise TypeError("This is not Nosorog Exception.")
