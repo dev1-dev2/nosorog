@@ -12,3 +12,6 @@ class TestSilentDecorator(unittest.TestCase):
         with self.assertRaises(Exception, msg="Wrong type of Exception raised.") as context:
             ExceptionThrower().get_aloud_exception()
         self.assertTrue("This is not Nosorog Exception." in str(context.exception), msg="Wrong Exception message.")
+
+    def test_silent_decorator_returns_none_when_included_exception(self):
+        self.assertIsNone(ExceptionThrower().get_included_exception())

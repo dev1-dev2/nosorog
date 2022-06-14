@@ -18,7 +18,3 @@ class BaseDecorator:
             raise e
         else:
             return result
-
-    @classmethod
-    def get_decorator(cls, func):
-        raise Exception("BaseDecorator and get_decorator method are not for direct usage, use inheritants instead.")
