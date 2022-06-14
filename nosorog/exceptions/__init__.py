@@ -1,3 +1,4 @@
-from nosorog.exceptions.bad_module_import_error import BadModuleImportError
-from nosorog.exceptions.call_by_mangled_name_error import CallByMangledNameError
-from nosorog.exceptions.call_by_wrong_method_error import CallByWrongMethodError
+from nosorog.exceptions.nosorog_bad_module_import_error import NosorogBadModuleImportError
+from nosorog.exceptions.nosorog_mangled_name_error import NosorogMangledNameError
+from nosorog.exceptions.nosorog_wrong_place_call_error import NosorogWrongPlaceCallError
+from nosorog.exceptions.nosorog_went_wrong_error import NosorogWentWrongError
