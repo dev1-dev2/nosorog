@@ -1,8 +1,8 @@
 import inspect
 
 from nosorog.decorators.base_decorator import BaseDecorator
-from nosorog.exceptions.mixins.exception_messages import ExceptionMessages
-from nosorog.exceptions import CallByMangledNameError, CallByWrongMethodError
+from nosorog.exceptions.mixins.nosorog_exception_messages import NosorogExceptionMessages
+from nosorog.exceptions import NosorogMangledNameError, NosorogWrongPlaceCallError
 
 
 class ProtectPrivate(BaseDecorator):
@@ -43,22 +43,22 @@ class ProtectPrivate(BaseDecorator):
     def block_if_not_self(self):
         fn = inspect.stack()
         if not bool(self.search_caller(f'self.{self.func.__name__}(', fn)):
-            raise Exception(ExceptionMessages.use_self)
+            raise Exception(NosorogExceptionMessages.use_self)
 
     def block_if_not_in_list(self):
         fn = inspect.stack()
         if self.search_caller(f'.{self.func.__name__}(', fn) not in self.attrs:
-            raise CallByWrongMethodError
+            raise NosorogWrongPlaceCallError
 
     def block_if_wrong_method(self):
         fn = inspect.stack()
         if self.search_caller(f'.{self.func.__name__}(', fn) != self.attrs:
-            raise CallByWrongMethodError
+            raise NosorogWrongPlaceCallError
 
     def block_if_mangled(self):
         fn = inspect.stack()
         if self.search_caller(f'.{self.mangled_name}(', fn):
-            raise CallByMangledNameError
+            raise NosorogMangledNameError
 
     @classmethod
     def one_obj(cls, func):

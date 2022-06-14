@@ -1,5 +1,5 @@
 from nosorog.decorators.base_decorator import BaseDecorator
-from nosorog.exceptions import CallByWrongMethodError, CallByMangledNameError
+from nosorog.exceptions import NosorogWrongPlaceCallError, NosorogMangledNameError
 
 
 class Silent(BaseDecorator):
@@ -12,7 +12,7 @@ class Silent(BaseDecorator):
             result = super().__call__(obj, *args, **kwargs)
         except Exception as ex:
             # catch Exception, compare it with DecoratorMessages, return None if message in list
-            if isinstance(ex, (CallByWrongMethodError, CallByMangledNameError)):
+            if isinstance(ex, (NosorogWrongPlaceCallError, NosorogMangledNameError)):
                 result = None
             else:
                 raise ex
