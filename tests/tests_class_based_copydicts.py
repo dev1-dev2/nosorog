@@ -1,6 +1,6 @@
 import unittest
 
-from .testcases.testcases_classbased_copy_dicts import ProtectedDicts
+from tests.testcases.testcases_class_based_copy_dicts import ProtectedDicts
 
 
 class TestCopyDictsDecorator(unittest.TestCase):
