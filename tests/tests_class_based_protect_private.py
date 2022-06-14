@@ -37,6 +37,6 @@ class TestProtectPrivateDecorator(unittest.TestCase, ExceptionMessages):
         # @protect_private.one_method('public_func_4')
         self.assertTrue(MangledNames().public_func_4() == 1, msg="Decorator does not work correctly.")
 
-    def test_protect_private_decorator_intercepts_exceptions_of_decorator_and_returns_none(self):
+    # def test_protect_private_decorator_intercepts_exceptions_of_decorator_and_returns_none(self):
         # @protect_private.silent
-        self.assertIsNone(MangledNames().public_func_6(), msg="Decorator does not work correctly.")
+        # self.assertIsNone(MangledNames().public_func_6(), msg="Decorator does not work correctly.")

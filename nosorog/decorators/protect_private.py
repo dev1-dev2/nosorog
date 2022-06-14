@@ -8,12 +8,11 @@ from nosorog.exceptions import CallByMangledNameError, CallByWrongMethodError
 class ProtectPrivate(BaseDecorator):
     mangled_name = ''
 
-    def __init__(self, func, attrs=None, protection_method=None, handle_exception='base_handle_exception'):
+    def __init__(self, func, attrs=None, protection_method=None):
         super().__init__(func=func)
         self.attrs = attrs
         if protection_method:
             self.protection_method = getattr(self, protection_method)
-        self.handle_exception = getattr(self, handle_exception)
 
     def __call__(self, obj, *args, **kwargs):
         self.mangled_name = '_{0}{1}'.format(
@@ -26,17 +25,9 @@ class ProtectPrivate(BaseDecorator):
         try:
             result = super().__call__(obj, *args, **kwargs)
         except Exception as ex:
-            result = self.handle_exception(ex)
+            raise ex
 
         return result
-
-    @staticmethod
-    def __base_method(args, kwargs):
-        return args, kwargs
-
-    @staticmethod
-    def base_handle_exception(ex):
-        raise ex
 
     @staticmethod
     def search_caller(search_template, fn):
@@ -67,14 +58,6 @@ class ProtectPrivate(BaseDecorator):
         if self.search_caller(f'.{self.mangled_name}(', fn):
             raise CallByMangledNameError
 
-    @staticmethod
-    def block_silently(ex):
-        # catch Exception, compare it with DecoratorMessages, return None if message in list
-        if str(ex) in ExceptionMessages.list():
-            return
-        else:
-            raise ex
-
     @classmethod
     def one_obj(cls, func):
         return cls(func=func, protection_method='block_if_not_self')
@@ -86,10 +69,6 @@ class ProtectPrivate(BaseDecorator):
     @classmethod
     def call_from(cls, methods):
         return lambda func: cls(func=func, attrs=methods, protection_method='block_if_not_in_list')
-
-    @classmethod
-    def silent(cls, func):
-        return cls(func=func, handle_exception='block_silently')
 
     @classmethod
     def block_mangled_call(cls, func):
