@@ -41,7 +41,7 @@ class ProtectPrivate(BaseDecorator):
     def block_if_not_self(self):
         fn = inspect.stack()
         if not bool(self.search_caller(f'self.{self.func.__name__}(', fn)):
-            raise Exception(NosorogExceptionMessages.use_self)
+            raise NosorogWrongPlaceCallError(NosorogExceptionMessages.use_self)
 
     def block_if_not_in_list(self):
         fn = inspect.stack()
