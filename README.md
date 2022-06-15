@@ -34,6 +34,26 @@ It is possible to use a concatenation of predefined and custom messages:
 raise NosorogMangledNameError("Method __get accessible with _MangledName__get() call.")
 # NosorogMangledNameError: "Use method`s dunder name instead. Method __get accessible with _MangledName__get() call."
 ```
+But it is one exclusion:
+`NosorogWrongPlaceCallError` uses the message `"Protected method can be called from specified methods only."` by default 
+and or other instead:
+```python
+from nosorog.exceptions.mixins.nosorog_exception_messages import NosorogExceptionMessages
+
+raise NosorogWrongPlaceCallError(NosorogExceptionMessages.use_self)
+# NosorogExceptionMessages: "Protected method can not be called from other object, use self instead."
+```
+It is not concatenated.
+
+### Full list of predefined messages
+
+Attribute | Message
+--- | --- |
+`protected_from_not_private_call` | "This method protected from not private call."
+`method_protected` | "This method protected."
+`wrong_place` | "Protected method can be called from specified places only."
+`use_self` | "Protected method can not be called from other object, use self instead."
+`mangled_call_blocked` | "Use method`s dunder name instead."
 
 ### Class based decorators
 
