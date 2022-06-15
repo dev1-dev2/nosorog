@@ -5,7 +5,7 @@ An assertive security library.
 
 ## Requirements
 
-3.6 >= Python <= 3.10
+3.5 >= Python <= 3.10
 
 ## Installing
 
