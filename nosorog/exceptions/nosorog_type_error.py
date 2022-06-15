@@ -1,0 +1,2 @@
+class NosorogTypeError(TypeError):
+    pass

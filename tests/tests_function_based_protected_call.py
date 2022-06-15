@@ -2,6 +2,10 @@ import os
 import unittest
 
 from nosorog.decorators.function_based_decorators import protected_call
+
+from nosorog.exceptions.nosorog_wrong_place_call_error import NosorogWrongPlaceCallError
+from nosorog.exceptions.mixins.nosorog_exception_messages import NosorogExceptionMessages
+
 from tests.mixins.messages import Messages
 
 
@@ -12,10 +16,10 @@ class TestProtectedCall(unittest.TestCase, Messages):
         return 1
 
     def test_protected_call_decorator_blocks_wrong_call(self):
-        with self.assertRaises(ValueError, msg=self.msg_wrong_type) as context:
+        with self.assertRaises(NosorogWrongPlaceCallError, msg=self.msg_wrong_type) as context:
             self.func()
-        self.assertTrue("This method protected." in str(context.exception), msg="The protected_call decorator does not "
-                                                                                "work with wrong call.")
+        self.assertTrue(NosorogExceptionMessages.wrong_place in str(context.exception),
+                        msg="The protected_call decorator does not work with wrong call.")
 
     def test_protected_call_decorator_allows_correct_call(self):
         self.assertTrue(self.func() == 1, msg="The protected_call decorator does not work with correct call.")
