@@ -45,17 +45,17 @@ class ProtectPrivate(BaseDecorator):
 
     def block_if_not_in_list(self):
         fn = inspect.stack()
-        if self.search_caller(f'.{self.func.__name__}(', fn) not in self.attrs:
+        if self.search_caller('self.{name}('.format(name=self.func.__name__), fn) not in self.attrs:
             raise NosorogWrongPlaceCallError
 
     def block_if_wrong_method(self):
         fn = inspect.stack()
-        if self.search_caller(f'.{self.func.__name__}(', fn) != self.attrs:
+        if self.search_caller('self.{name}('.format(name=self.func.__name__), fn) != self.attrs:
             raise NosorogWrongPlaceCallError
 
     def block_if_mangled(self):
         fn = inspect.stack()
-        if self.search_caller(f'.{self.mangled_name}(', fn):
+        if self.search_caller('.{name}('.format(name=self.mangled_name), fn):
             raise NosorogMangledNameError
 
     @classmethod
