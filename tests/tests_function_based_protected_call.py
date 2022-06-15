@@ -18,8 +18,8 @@ class TestProtectedCall(unittest.TestCase, Messages):
     def test_protected_call_decorator_blocks_wrong_call(self):
         with self.assertRaises(NosorogWrongPlaceCallError, msg=self.msg_wrong_type) as context:
             self.func()
-        self.assertTrue(NosorogExceptionMessages.wrong_place in str(context.exception), msg="The protected_call decorator does not "
-                                                                                "work with wrong call.")
+        self.assertTrue(NosorogExceptionMessages.wrong_place in str(context.exception),
+                        msg="The protected_call decorator does not work with wrong call.")
 
     def test_protected_call_decorator_allows_correct_call(self):
         self.assertTrue(self.func() == 1, msg="The protected_call decorator does not work with correct call.")
