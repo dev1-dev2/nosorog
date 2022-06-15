@@ -1,6 +1,9 @@
 import copy
 import inspect
 
+from nosorog.exceptions import NosorogTypeError, NosorogWrongPlaceCallError
+from nosorog.exceptions.mixins.nosorog_exception_messages import NosorogExceptionMessages
+
 
 def copy_dicts(deep_copy=False):
     def decorator(func):
@@ -27,13 +30,13 @@ def protect_ids(id_names=None):
     def decorator(func):
         def wrap(*args, **kwargs):
             if id_names and isinstance(id_names, list) and set([type(name) for name in id_names]) != {str}:
-                raise TypeError("Wrong format of id_names in decorator. Must be list of str.")
+                raise NosorogTypeError("Wrong format of id_names in decorator. Must be list of str.")
             if id_names:
                 try:
                     new_kwargs = dict([(kwarg_name, int(kwarg_item)) if kwarg_name in id_names else
                                        (kwarg_name, kwarg_item) for kwarg_name, kwarg_item in kwargs.items()])
                 except Exception:
-                    raise TypeError("Received the ids of wrong type.")
+                    raise NosorogTypeError("Received the ids of wrong type.")
             else:
                 new_kwargs = kwargs
             result = func(args, **new_kwargs)
@@ -55,11 +58,11 @@ def protect_private(allowed_list=None, silent=False):
             if allowed_list and 'self' in allowed_list and f'self.{func.__name__}(' not in fn[1].code_context[0]:
                 if silent:
                     return None
-                raise Exception("This method can not be called from other object, use self instead.")
+                raise NosorogWrongPlaceCallError(NosorogExceptionMessages.use_self)
             elif allowed_list and fn[1].function not in allowed_list:
                 if silent:
                     return None
-                raise Exception("This method protected from not private call.")
+                raise NosorogWrongPlaceCallError(NosorogExceptionMessages.wrong_place)
             elif allowed_list is None:
                 return None
 
@@ -78,9 +81,9 @@ def protected_call(from_method=None, from_file=None):
         def wrapper(*args, **kwargs):
             fn = inspect.stack()
             if from_method is not None and fn[1].function != from_method:
-                raise ValueError("This method protected.")
+                raise NosorogWrongPlaceCallError
             if from_file is not None and fn[1].filename != from_file:
-                raise ValueError("This method protected.")
+                raise NosorogWrongPlaceCallError
             result = func(*args, **kwargs)
 
             return result
