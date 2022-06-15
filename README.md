@@ -28,6 +28,7 @@ Exception | Default message |
 `NosorogWrongPlaceCallError` (1) | "Protected method can be called from specified methods only." | 
 `NosorogWrongPlaceCallError` (2) | "Protected method can not be called from other object, use self instead." | 
 `NosorogWentWrongError` | "Something broken." |
+`NosorogTypeError` | child of `TypeError`. No especial message provided. |
 
 It is possible to use a concatenation of predefined and custom messages:
 ```python
