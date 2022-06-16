@@ -22,3 +22,6 @@ class TestSilentDecorator(unittest.TestCase):
         with self.assertRaises(NosorogWrongPlaceCallError, msg="Wrong type of Exception raised.") as context:
             ExceptionThrower().get_excluded_exception()
         self.assertTrue(NosorogExceptionMessages.wrong_place in str(context.exception), msg="Wrong Exception message.")
+
+    def test_silent_decorator_bypass_method_execution(self):
+        self.assertTrue(ExceptionThrower().get_data() == 1)

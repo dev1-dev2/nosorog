@@ -19,3 +19,7 @@ class ExceptionThrower:
     @silent.exclude([NosorogWrongPlaceCallError])
     def get_excluded_exception(self):
         raise NosorogWrongPlaceCallError
+
+    @silent
+    def get_data(self):
+        return 1
