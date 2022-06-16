@@ -1,8 +1,8 @@
-from nosorog.decorators.base_decorator import BaseDecorator
+from nosorog.decorators.nosorog_base_decorator import NosorogBaseDecorator
 from nosorog.exceptions import NosorogWrongPlaceCallError, NosorogMangledNameError, NosorogTypeError
 
 
-class Silent(BaseDecorator):
+class Silent(NosorogBaseDecorator):
     __exceptions = (NosorogWrongPlaceCallError, NosorogMangledNameError, NosorogTypeError)
 
     def __init__(self, func, exceptions=None):

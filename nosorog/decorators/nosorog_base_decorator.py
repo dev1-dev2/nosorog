@@ -1,7 +1,7 @@
 from functools import update_wrapper, partial
 
 
-class BaseDecorator:
+class NosorogBaseDecorator:
 
     def __init__(self, func):
         update_wrapper(self, func)

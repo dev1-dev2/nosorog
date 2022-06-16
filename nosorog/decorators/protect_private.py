@@ -1,11 +1,11 @@
 import inspect
 
-from nosorog.decorators.base_decorator import BaseDecorator
+from nosorog.decorators.nosorog_base_decorator import NosorogBaseDecorator
 from nosorog.exceptions.mixins.nosorog_exception_messages import NosorogExceptionMessages
 from nosorog.exceptions import NosorogMangledNameError, NosorogWrongPlaceCallError
 
 
-class ProtectPrivate(BaseDecorator):
+class ProtectPrivate(NosorogBaseDecorator):
     __mangled_name = ''
 
     def __init__(self, func, attrs=None, protection_method=None):

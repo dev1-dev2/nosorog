@@ -1,9 +1,9 @@
 import copy
 
-from nosorog.decorators.base_decorator import BaseDecorator
+from nosorog.decorators.nosorog_base_decorator import NosorogBaseDecorator
 
 
-class CopyDicts(BaseDecorator):
+class CopyDicts(NosorogBaseDecorator):
     """ The decorators for dicts copying. Does not work with @staticmethod."""
 
     def __init__(self, func, copy_method='copy_all', copy_type='copy'):
