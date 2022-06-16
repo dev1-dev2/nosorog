@@ -69,7 +69,7 @@ from nosorog.decorators import protect_private, copy_dicts, silent
 Decorator | Description                                                            |
 --- |------------------------------------------------------------------------
 `@silent` | intercepts all the exceptions of `Nosorog` and returns `None` instead. |
-`@silent.include(exceptions)` | same as above and list of provided exceptions to.                      |
+`@silent.include(exceptions)` | same as above and list of provided exceptions too.                     |
 `@silent.exclude(exceptions)` | same as above, but provided exceptions excluded.                       |
 --- | ---                                                                    
 `@protect_private.block_mangled_call` | protect of name mangling usage.                                        |
