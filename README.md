@@ -66,23 +66,24 @@ from nosorog.decorators import protect_private, copy_dicts, silent
 ```
 
 
-Decorator | Description |
---- | ---
+Decorator | Description                                                            |
+--- |------------------------------------------------------------------------
 `@silent` | intercepts all the exceptions of `Nosorog` and returns `None` instead. |
-`@silent.include(exceptions)` | same as above and list of provided exceptions to. |
---- | ---
-`@protect_private.block_mangled_call` | protect of name mangling usage. |
-`@protect_private.one_obj` | decorated method accessible with `self` usage only. |
-`@protect_private.one_method("method_name")` | decorated method accessible from one method only. |
-`@protect_private.call_from(methods)` | decorated method accessible from the methods provided in list only. |
---- | ---
-`@copy_dicts` | makes shallow copy of all the dicts in `args` and `kwargs` |
-`@copy_dicts.deep_args` | makes deep copy of all the dicts in `args` |
-`@copy_dicts.deep_kwargs` | makes deep copy of all the dicts in `kwargs` |
-`@copy_dicts.deep_all` | makes deep copy of all the dicts in `args` and `kwargs` |
-`@copy_dicts.shallow_args` | makes shallow copy of all the dicts in `args` |
-`@copy_dicts.shallow_kwargs` | makes shallow copy of all the dicts in `kwargs` |
-`@copy_dicts.shallow_all` | makes shallow copy of all the dicts in `args` and `kwargs` |
+`@silent.include(exceptions)` | same as above and list of provided exceptions to.                      |
+`@silent.exclude(exceptions)` | same as above, but provided exceptions excluded.                       |
+--- | ---                                                                    
+`@protect_private.block_mangled_call` | protect of name mangling usage.                                        |
+`@protect_private.one_obj` | decorated method accessible with `self` usage only.                    |
+`@protect_private.one_method("method_name")` | decorated method accessible from one method only.                      |
+`@protect_private.call_from(methods)` | decorated method accessible from the methods provided in list only.    |
+--- | ---                                                                    
+`@copy_dicts` | makes shallow copy of all the dicts in `args` and `kwargs`             |
+`@copy_dicts.deep_args` | makes deep copy of all the dicts in `args`                             |
+`@copy_dicts.deep_kwargs` | makes deep copy of all the dicts in `kwargs`                           |
+`@copy_dicts.deep_all` | makes deep copy of all the dicts in `args` and `kwargs`                |
+`@copy_dicts.shallow_args` | makes shallow copy of all the dicts in `args`                          |
+`@copy_dicts.shallow_kwargs` | makes shallow copy of all the dicts in `kwargs`                        |
+`@copy_dicts.shallow_all` | makes shallow copy of all the dicts in `args` and `kwargs`             |
 
 
 ### Function based decorators

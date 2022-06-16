@@ -1,3 +1,5 @@
+from nosorog.exceptions import NosorogWrongPlaceCallError
+from nosorog.exceptions.mixins.nosorog_exception_messages import NosorogExceptionMessages
 from tests.testcases.testcases_class_based_silent import ExceptionThrower
 
 import unittest
@@ -15,3 +17,8 @@ class TestSilentDecorator(unittest.TestCase):
 
     def test_silent_decorator_returns_none_when_included_exception(self):
         self.assertIsNone(ExceptionThrower().get_included_exception())
+
+    def test_silent_decorator_bypass_excluded_exception(self):
+        with self.assertRaises(NosorogWrongPlaceCallError, msg="Wrong type of Exception raised.") as context:
+            ExceptionThrower().get_excluded_exception()
+        self.assertTrue(NosorogExceptionMessages.wrong_place in str(context.exception), msg="Wrong Exception message.")

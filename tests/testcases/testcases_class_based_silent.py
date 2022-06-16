@@ -15,3 +15,7 @@ class ExceptionThrower:
     @silent.include([TypeError])
     def get_included_exception(self):
         raise TypeError("This is not Nosorog Exception.")
+
+    @silent.exclude([NosorogWrongPlaceCallError])
+    def get_excluded_exception(self):
+        raise NosorogWrongPlaceCallError
