@@ -1,9 +1,9 @@
 from nosorog.decorators.nosorog_base_decorator import NosorogBaseDecorator
-from nosorog.exceptions import NosorogWrongPlaceCallError, NosorogMangledNameError, NosorogTypeError
+from nosorog.exceptions import NosorogWentWrongError
 
 
 class Silent(NosorogBaseDecorator):
-    __exceptions = (NosorogWrongPlaceCallError, NosorogMangledNameError, NosorogTypeError)
+    __exceptions = NosorogWentWrongError.subclasses_tuple
 
     def __init__(self, func, exceptions=None):
         if exceptions:
@@ -16,7 +16,7 @@ class Silent(NosorogBaseDecorator):
             result = super().__call__(obj, *args, **kwargs)
         except Exception as ex:
             # catch Exception, compare it with DecoratorMessages, return None if message in list
-            if isinstance(ex, self.__exceptions):
+            if type(ex) in self.__exceptions:
                 result = None
             else:
                 raise ex

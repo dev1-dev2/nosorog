@@ -10,3 +10,9 @@ class NosorogWentWrongError(Exception):
 
     def __str__(self):
         return self.message if self.message else ''
+
+    @classmethod
+    @property
+    def subclasses_tuple(cls):
+        subclasses = cls.__subclasses__()
+        return tuple(subclasses)
