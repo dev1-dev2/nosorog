@@ -34,18 +34,11 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Display Python version
       run: python -c "import sys; print(sys.version)"
-    - name: Upgrade pip, install dependencies if not windows
-      if: !contains(matrix.os, 'windows')
+    - name: Upgrade pip, install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install setuptools wheel twine
-        if [ -f requirements.txt ]; then python -m pip install -r requirements.txt; fi
-    - name: Upgrade pip, install dependencies if windows
-      if: contains(matrix.os, 'windows')
-      run: |
-        python -m pip install --upgrade pip
-        pip install setuptools wheel twine
-        IF EXIST "requirements.txt" (python -m pip install -r requirements.txt;)
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Install the package from setup.py
       run: python setup.py install
     - name: Run tests
