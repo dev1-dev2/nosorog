@@ -37,10 +37,8 @@ jobs:
     - name: Upgrade pip, install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install setuptools wheel twine
-    - name: Install requirements.txt if not windows
-      run: if [ -f requirements.txt ]; then python -m pip install -r requirements.txt; fi
-      if: !contains(matrix.os, 'windows')
+        pip install setuptools wheel twine
+        if [ -f requirements.txt ]; then python -m pip install -r requirements.txt; fi
     - name: Install requirements.txt if windows
       run: IF EXIST "requirements.txt" (python -m pip install -r requirements.txt;)
       if: contains(matrix.os, 'windows')
