@@ -1,9 +1,10 @@
 import copy
 
 from nosorog.decorators.nosorog_base_decorator import NosorogBaseDecorator
+from nosorog.decorators.metaclasses.copy_dicts_meta import CopyDictsMeta
 
 
-class CopyDicts(NosorogBaseDecorator):
+class CopyDicts(NosorogBaseDecorator, metaclass=CopyDictsMeta):
     """ The decorators for dicts copying. Does not work with @staticmethod."""
 
     def __init__(self, func, copy_method='copy_all', copy_type='copy'):
@@ -47,33 +48,3 @@ class CopyDicts(NosorogBaseDecorator):
             new_kwargs = kwargs
 
         return args, new_kwargs
-
-    @classmethod
-    @property
-    def shallow_args(cls):
-        return lambda func: cls(func, copy_method='copy_args', copy_type='copy')
-
-    @classmethod
-    @property
-    def shallow_kwargs(cls):
-        return lambda func: cls(func, copy_method='copy_kwargs', copy_type='copy')
-
-    @classmethod
-    @property
-    def shallow_all(cls):
-        return lambda func: cls(func, copy_method='copy_all', copy_type='copy')
-
-    @classmethod
-    @property
-    def deep_args(cls):
-        return lambda func: cls(func, copy_method='copy_args', copy_type='deepcopy')
-
-    @classmethod
-    @property
-    def deep_kwargs(cls):
-        return lambda func: cls(func, copy_method='copy_kwargs', copy_type='deepcopy')
-
-    @classmethod
-    @property
-    def deep_all(cls):
-        return lambda func: cls(func, copy_method='copy_all', copy_type='deepcopy')

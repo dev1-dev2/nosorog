@@ -1,4 +1,7 @@
-class NosorogWentWrongError(Exception):
+from nosorog.exceptions.metaclasses.nosorog_went_wrong_error_meta import NosorogWentWrongErrorMeta
+
+
+class NosorogWentWrongError(Exception, metaclass=NosorogWentWrongErrorMeta):
     # Base Exception of Nosorog
 
     __module__ = Exception.__module__
@@ -10,9 +13,3 @@ class NosorogWentWrongError(Exception):
 
     def __str__(self):
         return self.message if self.message else ''
-
-    @classmethod
-    @property
-    def subclasses_tuple(cls):
-        subclasses = cls.__subclasses__()
-        return tuple(subclasses)

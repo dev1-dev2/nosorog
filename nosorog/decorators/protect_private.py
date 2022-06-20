@@ -3,9 +3,10 @@ import inspect
 from nosorog.decorators.nosorog_base_decorator import NosorogBaseDecorator
 from nosorog.exceptions.mixins.nosorog_exception_messages import NosorogExceptionMessages
 from nosorog.exceptions import NosorogMangledNameError, NosorogWrongPlaceCallError
+from nosorog.decorators.metaclasses.protect_private_meta import ProtectPrivateMeta
 
 
-class ProtectPrivate(NosorogBaseDecorator):
+class ProtectPrivate(NosorogBaseDecorator, metaclass=ProtectPrivateMeta):
     __mangled_name = ''
 
     def __init__(self, func, attrs=None, protection_method=None):
@@ -68,19 +69,9 @@ class ProtectPrivate(NosorogBaseDecorator):
             raise NosorogMangledNameError
 
     @classmethod
-    @property
-    def one_obj(cls):
-        return lambda func: cls(func=func, protection_method='block_if_not_self')
-
-    @classmethod
     def one_method(cls, method):
         return lambda func: cls(func=func, attrs=method, protection_method='block_if_wrong_method')
 
     @classmethod
     def call_from(cls, methods):
         return lambda func: cls(func=func, attrs=methods, protection_method='block_if_not_in_list')
-
-    @classmethod
-    @property
-    def block_mangled_call(cls):
-        return lambda func: cls(func=func, protection_method='block_if_mangled')
