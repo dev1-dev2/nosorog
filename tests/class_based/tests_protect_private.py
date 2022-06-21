@@ -1,4 +1,4 @@
-from tests.testcases.class_based.testcases_class_based_protect_private import MangledNames
+from tests.testcases.class_based.protect_private import MangledNames
 from nosorog.exceptions.mixins.nosorog_exception_messages import NosorogExceptionMessages
 from nosorog.exceptions import NosorogWrongPlaceCallError, NosorogMangledNameError
 
