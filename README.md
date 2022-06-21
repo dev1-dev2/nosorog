@@ -1,5 +1,5 @@
 # Nosorog
-## Introdaction
+## Introduction
 
 An assertive security library.
 
@@ -22,13 +22,13 @@ python3 -m unittest discover
 
 ### Exceptions
 
-Exception | Default message |
---- | --- |
-`NosorogMangledNameError` | "Use method`s dunder name instead." |
-`NosorogWrongPlaceCallError` (1) | "Protected method can be called from specified methods only." | 
-`NosorogWrongPlaceCallError` (2) | "Protected method can not be called from other object, use self instead." | 
-`NosorogWentWrongError` | "Something broken." |
-`NosorogTypeError` | child of `TypeError`. No especial message provided. |
+| Exception                        | Default message |
+|----------------------------------| --- |
+| `NosorogMangledNameError`        | "Use method`s dunder name instead." |
+| `NosorogWrongPlaceCallError` (1) | "Protected method can be called from specified methods only." | 
+| `NosorogWrongPlaceCallError` (2) | "Protected method can not be called from other object, use self instead." | 
+| `NosorogWentWrongError`          | "Something broken." |
+|  `NosorogTypeError`              | child of `TypeError`. No especial message provided. |
 
 It is possible to use a concatenation of predefined and custom messages:
 ```python
@@ -48,13 +48,13 @@ It is not concatenated.
 
 ### Full list of predefined messages
 
-Attribute | Message
---- | --- |
-`protected_from_not_private_call` | "This method protected from not private call."
-`method_protected` | "This method protected."
-`wrong_place` | "Protected method can be called from specified places only."
-`use_self` | "Protected method can not be called from other object, use self instead."
-`mangled_call_blocked` | "Use method`s dunder name instead."
+| Attribute                         | Message |
+|-----------------------------------| --- |
+| `protected_from_not_private_call` | "This method protected from not private call." |
+| `method_protected`                | "This method protected." |
+| `wrong_place`                     | "Protected method can be called from specified places only." |
+| `use_self`                        | "Protected method can not be called from other object, use self instead." |
+|  `mangled_call_blocked`           | "Use method`s dunder name instead." |
 
 ### Class based decorators
 
@@ -66,24 +66,24 @@ from nosorog.decorators import protect_private, copy_dicts, silent
 ```
 
 
-Decorator | Description                                                            |
---- |------------------------------------------------------------------------
-`@silent` | intercepts all the exceptions of `Nosorog` and returns `None` instead. |
-`@silent.include(exceptions)` | same as above and list of provided exceptions too.                     |
-`@silent.exclude(exceptions)` | same as above, but provided exceptions excluded.                       |
---- | ---                                                                    
-`@protect_private.block_mangled_call` | protect of name mangling usage.                                        |
-`@protect_private.one_obj` | decorated method accessible with `self` usage only.                    |
-`@protect_private.one_method("method_name")` | decorated method accessible from one method only.                      |
-`@protect_private.call_from(methods)` | decorated method accessible from the methods provided in list only.    |
---- | ---                                                                    
-`@copy_dicts` | makes shallow copy of all the dicts in `args` and `kwargs`             |
-`@copy_dicts.deep_args` | makes deep copy of all the dicts in `args`                             |
-`@copy_dicts.deep_kwargs` | makes deep copy of all the dicts in `kwargs`                           |
-`@copy_dicts.deep_all` | makes deep copy of all the dicts in `args` and `kwargs`                |
-`@copy_dicts.shallow_args` | makes shallow copy of all the dicts in `args`                          |
-`@copy_dicts.shallow_kwargs` | makes shallow copy of all the dicts in `kwargs`                        |
-`@copy_dicts.shallow_all` | makes shallow copy of all the dicts in `args` and `kwargs`             |
+| Decorator                                    | Description                                                            |
+|----------------------------------------------|------------------------------------------------------------------------|
+| `@silent`                                    | intercepts all the exceptions of `Nosorog` and returns `None` instead. |
+| `@silent.include(exceptions)`                | same as above and list of provided exceptions too.                     |
+| `@silent.exclude(exceptions)`                | same as above, but provided exceptions excluded.                       |
+| ---                                          | --- |                                                                    
+| `@protect_private.block_mangled_call`        | protect of name mangling usage.                                        |
+| `@protect_private.one_obj`                   | decorated method accessible with `self` usage only.                    |
+| `@protect_private.one_method("method_name")` | decorated method accessible from one method only.                      |
+| `@protect_private.call_from(methods)`        | decorated method accessible from the methods provided in list only.    |
+| ---                                          | ---  |                                                                  
+| `@copy_dicts`                                | makes shallow copy of all the dicts in `args` and `kwargs`             |
+| `@copy_dicts.deep_args`                      | makes deep copy of all the dicts in `args`                             |
+| `@copy_dicts.deep_kwargs`                    | makes deep copy of all the dicts in `kwargs`                           |
+| `@copy_dicts.deep_all`                       | makes deep copy of all the dicts in `args` and `kwargs`                |
+| `@copy_dicts.shallow_args`                   | makes shallow copy of all the dicts in `args`                          |
+| `@copy_dicts.shallow_kwargs`                 | makes shallow copy of all the dicts in `kwargs`                        |
+|  `@copy_dicts.shallow_all`                   | makes shallow copy of all the dicts in `args` and `kwargs`             |
 
 
 ### Function based decorators
@@ -96,12 +96,12 @@ from nosorog.decorators.function_based_decorators import protect_private, copy_d
 ```
 
 
-Decorator | Description                                                                                                                                                                                                   |
---- |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-`@protect_private(allowed_list=list)`  | make a call with `_Class__private_method()` impossible. `allowed_list` it is `str` names of method which you can call the private method from. also support `'self'` (`str`) for calls from same object only. |
-`@protected_call(from_method=str, from_file=str)` | make the attack by the file injection impossible.                                                                                                                                                             |
-`@copy_dicts(deep_copy=bool)` | make a copy of `dicts` in `args` and `kwargs`.                                                                                                                                                                |
-`@protect_ids(id_names=[str])`| trying to convert id to `int` or throw `Exception`.                                                                                                                                                           |
+| Decorator                                         | Description                                                                                                                                                                                                   |
+|---------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|  `@protect_private(allowed_list=list)`            | make a call with `_Class__private_method()` impossible. `allowed_list` it is `str` names of method which you can call the private method from. also support `'self'` (`str`) for calls from same object only. |
+| `@protected_call(from_method=str, from_file=str)` | make the attack by the file injection impossible.                                                                                                                                                             |
+| `@copy_dicts(deep_copy=bool)`                     | make a copy of `dicts` in `args` and `kwargs`.                                                                                                                                                                |
+| `@protect_ids(id_names=[str])`                    | trying to convert id to `int` or throw `Exception`.                                                                                                                                                           |
 
 
 ## Examples

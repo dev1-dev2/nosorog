@@ -20,7 +20,7 @@ jobs:
         python-version: ["3.5", "3.6", "3.7", "3.8", "3.9", "3.10", "3.11-dev"]
         os: [ubuntu-18.04, macOS-latest, windows-latest]
         include:
-          # pypy-3.7 on Mac OS currently fails trying to compile
+          # pypy-3.7 on MacOS currently fails trying to compile
           # brotlipy. Moving pypy3 to only test linux.
           - python-version: pypy-3.7
             os: ubuntu-latest
@@ -38,7 +38,9 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install setuptools wheel twine
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        if [ -f requirements.txt ]; then 
+        pip install -r requirements.txt; 
+        fi
     - name: Install the package from setup.py
       run: python setup.py install
     - name: Run tests

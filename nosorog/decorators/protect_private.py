@@ -24,13 +24,14 @@ class ProtectPrivate(NosorogBaseDecorator, metaclass=ProtectPrivateMeta):
 
     def __call__(self, obj, *args, **kwargs):
 
+        fn = inspect.stack()
         if self.protection_method and self.protection_method == self.__block_if_mangled:
             mangled_name = '_{}{}'.format(
                 obj.__class__.__name__, self.func.__name__
             )
-            self.protection_method(mangled_name)
+            self.protection_method(fn, mangled_name=mangled_name)
         elif self.protection_method:
-            self.protection_method()
+            self.protection_method(fn)
 
         try:
             result = super().__call__(obj, *args, **kwargs)
@@ -50,23 +51,19 @@ class ProtectPrivate(NosorogBaseDecorator, metaclass=ProtectPrivateMeta):
 
         return caller_name
 
-    def __block_if_not_self(self):
-        fn = inspect.stack()
+    def __block_if_not_self(self, fn):
         if not bool(self.__search_caller(r'self\.{name}\('.format(name=self.func.__name__), fn)):
             raise NosorogWrongPlaceCallError(NosorogExceptionMessages.use_self)
 
-    def __block_if_not_in_list(self):
-        fn = inspect.stack()
+    def __block_if_not_in_list(self, fn):
         if self.__search_caller(r'\.{name}\('.format(name=self.func.__name__), fn) not in self.attrs:
             raise NosorogWrongPlaceCallError
 
-    def __block_if_wrong_method(self):
-        fn = inspect.stack()
+    def __block_if_wrong_method(self, fn):
         if self.__search_caller(r'\.{name}\('.format(name=self.func.__name__), fn) != self.attrs:
             raise NosorogWrongPlaceCallError
 
-    def __block_if_mangled(self, mangled_name):
-        fn = inspect.stack()
+    def __block_if_mangled(self, fn, *, mangled_name):
         regexpr = r'\.{}'.format(mangled_name)
         if self.__search_caller(regexpr, fn):
             raise NosorogMangledNameError

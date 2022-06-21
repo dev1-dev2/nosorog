@@ -55,7 +55,8 @@ def protect_private(allowed_list=None, silent=False):
 
             fn = inspect.stack()
 
-            if allowed_list and 'self' in allowed_list and 'self.{}('.format(func.__name__) not in fn[1].code_context[0]:
+            if allowed_list and 'self' in allowed_list and 'self.{}('.format(func.__name__) \
+                    not in fn[1].code_context[0]:
                 if silent:
                     return None
                 raise NosorogWrongPlaceCallError(NosorogExceptionMessages.use_self)
