@@ -66,6 +66,6 @@ class ProtectPrivate(NosorogBaseDecorator, metaclass=ProtectPrivateMeta):
 
     def __block_if_mangled(self):
         fn = inspect.stack()
-        regexpr = r'\._[A-Za-z0-9_]+{}'.format(self.func.__name__)
+        regexpr = r'\.{}'.format(self.__mangled_name)
         if self.__search_caller(regexpr, fn):
             raise NosorogMangledNameError
