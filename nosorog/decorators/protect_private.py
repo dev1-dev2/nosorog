@@ -56,16 +56,16 @@ class ProtectPrivate(NosorogBaseDecorator, metaclass=ProtectPrivateMeta):
 
     def __block_if_not_in_list(self):
         fn = inspect.stack()
-        if self.__search_caller(r'self\.{name}\('.format(name=self.func.__name__), fn) not in self.attrs:
+        if self.__search_caller(r'\.{name}\('.format(name=self.func.__name__), fn) not in self.attrs:
             raise NosorogWrongPlaceCallError
 
     def __block_if_wrong_method(self):
         fn = inspect.stack()
-        if self.__search_caller(r'self\.{name}\('.format(name=self.func.__name__), fn) != self.attrs:
+        if self.__search_caller(r'\.{name}\('.format(name=self.func.__name__), fn) != self.attrs:
             raise NosorogWrongPlaceCallError
 
     def __block_if_mangled(self):
         fn = inspect.stack()
-        regexpr = r'._[A-Za-z0-9_]+{}'.format(self.func.__name__)
+        regexpr = r'\._[A-Za-z0-9_]+{}'.format(self.func.__name__)
         if self.__search_caller(regexpr, fn):
             raise NosorogMangledNameError
