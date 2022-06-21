@@ -8,9 +8,8 @@ from nosorog.decorators.metaclasses.protect_private_meta import ProtectPrivateMe
 
 
 class ProtectPrivate(NosorogBaseDecorator, metaclass=ProtectPrivateMeta):
-    __mangled_name = ''
 
-    def __init__(self, func, attrs=None, protection_method=None):
+    def __init__(self, *, func, attrs=None, protection_method=None):
         super().__init__(func=func)
         self.attrs = attrs
 
@@ -24,11 +23,13 @@ class ProtectPrivate(NosorogBaseDecorator, metaclass=ProtectPrivateMeta):
             self.protection_method = methods.get(protection_method)
 
     def __call__(self, obj, *args, **kwargs):
-        self.__mangled_name = '_{0}{1}'.format(
-            obj.__class__.__name__, self.func.__name__
-        )
 
-        if self.protection_method:
+        if self.protection_method and self.protection_method == self.__block_if_mangled:
+            mangled_name = '_{}{}'.format(
+                obj.__class__.__name__, self.func.__name__
+            )
+            self.protection_method(mangled_name)
+        elif self.protection_method:
             self.protection_method()
 
         try:
@@ -64,8 +65,8 @@ class ProtectPrivate(NosorogBaseDecorator, metaclass=ProtectPrivateMeta):
         if self.__search_caller(r'\.{name}\('.format(name=self.func.__name__), fn) != self.attrs:
             raise NosorogWrongPlaceCallError
 
-    def __block_if_mangled(self):
+    def __block_if_mangled(self, mangled_name):
         fn = inspect.stack()
-        regexpr = r'\.{}'.format(self.__mangled_name)
+        regexpr = r'\.{}'.format(mangled_name)
         if self.__search_caller(regexpr, fn):
             raise NosorogMangledNameError

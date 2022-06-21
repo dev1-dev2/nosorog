@@ -27,9 +27,9 @@ class Silent(NosorogBaseDecorator):
     def include(cls, exceptions):
         exceptions = exceptions or ()
         exceptions = (*cls.__exceptions, *exceptions)
-        return lambda func: cls(func, exceptions)
+        return lambda func: cls(func, exceptions=exceptions)
 
     @classmethod
     def exclude(cls, exceptions):
         exceptions = tuple(set(cls.__exceptions) - set(exceptions))
-        return lambda func: cls(func, exceptions)
+        return lambda func: cls(func, exceptions=exceptions)

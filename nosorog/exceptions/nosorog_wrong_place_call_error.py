@@ -5,7 +5,7 @@ from nosorog.exceptions.mixins.nosorog_exception_messages import NosorogExceptio
 class NosorogWrongPlaceCallError(NosorogWentWrongError, NosorogExceptionMessages):
     __module__ = Exception.__module__
 
-    def __init__(self, message=None, errors=None, **kwargs):
+    def __init__(self, message=None, *, errors=None, **kwargs):
         if message is not None:
             self.message = message
         else:

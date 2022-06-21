@@ -5,7 +5,7 @@ from nosorog.exceptions.mixins.nosorog_exception_messages import NosorogExceptio
 class NosorogMangledNameError(NosorogWentWrongError, NosorogExceptionMessages):
     __module__ = Exception.__module__
 
-    def __init__(self, message=None, errors=None, **kwargs):
+    def __init__(self, message=None, *, errors=None, **kwargs):
         if message:
             self.message = '{0} {1}'.format(self.mangled_call_blocked, message)
         else:

@@ -7,7 +7,7 @@ from nosorog.decorators.metaclasses.copy_dicts_meta import CopyDictsMeta
 class CopyDicts(NosorogBaseDecorator, metaclass=CopyDictsMeta):
     """ The decorators for dicts copying. Does not work with @staticmethod."""
 
-    def __init__(self, func, copy_method='copy_all', copy_type='copy'):
+    def __init__(self, *, func, copy_method='copy_all', copy_type='copy'):
         super().__init__(func=func)
 
         methods = {
