@@ -1,6 +1,6 @@
 from nosorog.exceptions import NosorogWrongPlaceCallError
 from nosorog.exceptions.mixins.nosorog_exception_messages import NosorogExceptionMessages
-from tests.testcases.testcases_class_based_silent import ExceptionThrower
+from tests.testcases.class_based.testcases_class_based_silent import ExceptionThrower
 
 import unittest
 

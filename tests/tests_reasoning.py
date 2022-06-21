@@ -1,6 +1,6 @@
 import unittest
 
-from tests.testcases.testcases_function_based_reasoning import A
+from tests.testcases.function_based.testcases_function_based_reasoning import A
 
 
 class TestMangledNamesUsage(unittest.TestCase):

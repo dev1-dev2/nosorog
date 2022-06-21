@@ -1,7 +1,7 @@
 import unittest
 
 from tests.mixins.messages import Messages
-from tests.testcases.testcases_function_based import B, A
+from tests.testcases.function_based.testcases_function_based import B, A
 
 from nosorog.exceptions import NosorogWrongPlaceCallError
 from nosorog.exceptions.mixins.nosorog_exception_messages import NosorogExceptionMessages
