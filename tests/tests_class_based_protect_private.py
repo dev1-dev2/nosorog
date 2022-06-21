@@ -10,7 +10,7 @@ class TestProtectPrivateDecorator(unittest.TestCase, NosorogExceptionMessages):
     def test_protect_private_decorator_blocks_mangled_calls(self):
         # @protect_private.block_mangled_call
         with self.assertRaises(NosorogMangledNameError, msg="Wrong type of Exception raised.") as context:
-            MangledNames()._MangledNames__mangled_method_1()  # TODO change messages
+            MangledNames()._MangledNames__mangled_method_1()
         self.assertTrue(self.mangled_call_blocked in str(context.exception), msg="Wrong Exception message.")
 
     def test_protect_private_decorator_supports_not_mangled_calls(self):
