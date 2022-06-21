@@ -1,4 +1,5 @@
 import inspect
+import re
 
 from nosorog.decorators.nosorog_base_decorator import NosorogBaseDecorator
 from nosorog.exceptions.mixins.nosorog_exception_messages import NosorogExceptionMessages
@@ -40,7 +41,7 @@ class ProtectPrivate(NosorogBaseDecorator, metaclass=ProtectPrivateMeta):
     @staticmethod
     def __search_caller(search_template, fn):
         try:
-            items_gen = (item.function for item in fn if search_template in item.code_context[0])
+            items_gen = (item.function for item in fn if re.findall(search_template, item.code_context[0]))
             caller_name = next(items_gen)
             items_gen.close()
         except StopIteration as ex:
@@ -50,28 +51,21 @@ class ProtectPrivate(NosorogBaseDecorator, metaclass=ProtectPrivateMeta):
 
     def __block_if_not_self(self):
         fn = inspect.stack()
-        if not bool(self.__search_caller('self.{name}('.format(name=self.func.__name__), fn)):
+        if not bool(self.__search_caller(r'self\.{name}\('.format(name=self.func.__name__), fn)):
             raise NosorogWrongPlaceCallError(NosorogExceptionMessages.use_self)
 
     def __block_if_not_in_list(self):
         fn = inspect.stack()
-        if self.__search_caller('self.{name}('.format(name=self.func.__name__), fn) not in self.attrs:
+        if self.__search_caller(r'self\.{name}\('.format(name=self.func.__name__), fn) not in self.attrs:
             raise NosorogWrongPlaceCallError
 
     def __block_if_wrong_method(self):
         fn = inspect.stack()
-        if self.__search_caller('self.{name}('.format(name=self.func.__name__), fn) != self.attrs:
+        if self.__search_caller(r'self\.{name}\('.format(name=self.func.__name__), fn) != self.attrs:
             raise NosorogWrongPlaceCallError
 
     def __block_if_mangled(self):
         fn = inspect.stack()
-        if self.__search_caller('.{name}('.format(name=self.__mangled_name), fn):
+        regexpr = r'._[A-Za-z0-9_]+{}'.format(self.func.__name__)
+        if self.__search_caller(regexpr, fn):
             raise NosorogMangledNameError
-
-    @classmethod
-    def one_method(cls, method):
-        return lambda func: cls(func=func, attrs=method, protection_method='block_if_wrong_method')
-
-    @classmethod
-    def call_from(cls, methods):
-        return lambda func: cls(func=func, attrs=methods, protection_method='block_if_not_in_list')
