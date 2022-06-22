@@ -1,7 +1,7 @@
 import os
 import unittest
 
-from nosorog.decorators.function_based_decorators import protected_call
+from nosorog.decorators.function_based import protected_call
 
 from nosorog.exceptions.nosorog_wrong_place_call_error import NosorogWrongPlaceCallError
 from nosorog.exceptions.mixins.nosorog_exception_messages import NosorogExceptionMessages

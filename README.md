@@ -92,7 +92,7 @@ from nosorog.decorators import protect_private, copy_dicts, silent
 To import function based decorators use:
 
 ```python
-from nosorog.decorators.function_based_decorators import protect_private, copy_dicts, protect_ids, protected_call
+from nosorog.decorators.function_based import protect_private, copy_dicts, protect_ids, protected_call
 ```
 
 

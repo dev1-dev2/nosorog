@@ -1,6 +1,6 @@
 import unittest
 
-from nosorog.decorators.function_based_decorators import copy_dicts
+from nosorog.decorators.function_based import copy_dicts
 
 
 class TestCopyDictDecorator(unittest.TestCase):

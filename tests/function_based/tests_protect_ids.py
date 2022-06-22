@@ -1,6 +1,6 @@
 import unittest
 
-from nosorog.decorators.function_based_decorators import protect_ids
+from nosorog.decorators.function_based import protect_ids
 from tests.mixins.messages import Messages
 
 

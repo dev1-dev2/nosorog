@@ -1,4 +1,4 @@
-from nosorog.decorators.function_based_decorators import protect_private
+from nosorog.decorators.function_based import protect_private
 
 
 class A:
