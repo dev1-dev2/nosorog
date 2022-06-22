@@ -2,6 +2,7 @@ import copy
 
 from nosorog.decorators.nosorog_base_decorator import NosorogBaseDecorator
 from nosorog.decorators.metaclasses.copy_dicts_meta import CopyDictsMeta
+from nosorog.exceptions import NosorogWentWrongError
 
 
 class CopyDicts(NosorogBaseDecorator, metaclass=CopyDictsMeta):
@@ -25,7 +26,7 @@ class CopyDicts(NosorogBaseDecorator, metaclass=CopyDictsMeta):
         try:
             result = super().__call__(obj, *new_args, **new_kwargs)
         except Exception as ex:
-            raise ex
+            raise NosorogWentWrongError(str(ex))
 
         return result
 

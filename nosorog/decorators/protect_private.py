@@ -3,7 +3,7 @@ import re
 
 from nosorog.decorators.nosorog_base_decorator import NosorogBaseDecorator
 from nosorog.exceptions.mixins.nosorog_exception_messages import NosorogExceptionMessages
-from nosorog.exceptions import NosorogMangledNameError, NosorogWrongPlaceCallError
+from nosorog.exceptions import NosorogMangledNameError, NosorogWrongPlaceCallError, NosorogWentWrongError
 from nosorog.decorators.metaclasses.protect_private_meta import ProtectPrivateMeta
 
 
@@ -26,7 +26,7 @@ class ProtectPrivate(NosorogBaseDecorator, metaclass=ProtectPrivateMeta):
 
         fn = inspect.stack()
         if self.protection_method and self.protection_method == self.__block_if_mangled:
-            mangled_name = '_{}{}'.format(
+            mangled_name = r'\._{}{}\('.format(
                 obj.__class__.__name__, self.func.__name__
             )
             self.protection_method(fn, mangled_name=mangled_name)
@@ -36,7 +36,7 @@ class ProtectPrivate(NosorogBaseDecorator, metaclass=ProtectPrivateMeta):
         try:
             result = super().__call__(obj, *args, **kwargs)
         except Exception as ex:
-            raise ex
+            raise NosorogWentWrongError(str(ex))
 
         return result
 
@@ -46,7 +46,7 @@ class ProtectPrivate(NosorogBaseDecorator, metaclass=ProtectPrivateMeta):
             items_gen = (item.function for item in fn if re.findall(search_template, item.code_context[0]))
             caller_name = next(items_gen)
             items_gen.close()
-        except StopIteration as ex:
+        except StopIteration:
             caller_name = None
 
         return caller_name
@@ -64,6 +64,5 @@ class ProtectPrivate(NosorogBaseDecorator, metaclass=ProtectPrivateMeta):
             raise NosorogWrongPlaceCallError
 
     def __block_if_mangled(self, fn, *, mangled_name):
-        regexpr = r'\.{}'.format(mangled_name)
-        if self.__search_caller(regexpr, fn):
+        if self.__search_caller(mangled_name, fn[:10]):
             raise NosorogMangledNameError
