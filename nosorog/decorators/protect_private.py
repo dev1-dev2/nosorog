@@ -25,13 +25,11 @@ class ProtectPrivate(NosorogBaseDecorator, metaclass=ProtectPrivateMeta):
     def __call__(self, obj, *args, **kwargs):
 
         fn = inspect.stack()
-        if self.protection_method and self.protection_method == self.__block_if_mangled:
-            mangled_name = r'\._{}{}\('.format(
-                obj.__class__.__name__, self.func.__name__
-            )
-            self.protection_method(fn, mangled_name=mangled_name)
-        elif self.protection_method:
-            self.protection_method(fn)
+        self.regexp = r"( self)*(\.)(_{class_name})*({function_name})\(".format(
+            class_name=obj.__class__.__name__,
+            function_name=self.func.__name__
+        )
+        self.protection_method(fn)
 
         try:
             result = super().__call__(obj, *args, **kwargs)
@@ -40,10 +38,10 @@ class ProtectPrivate(NosorogBaseDecorator, metaclass=ProtectPrivateMeta):
 
         return result
 
-    @staticmethod
-    def __search_caller(search_template, fn):
+    def __search_caller(self, fn, func):
         try:
-            items_gen = (item.function for item in fn if re.findall(search_template, item.code_context[0]))
+            items_gen = (func(item, re.search(self.regexp, item.code_context[0])) for item in fn if
+                         re.search(self.regexp, item.code_context[0]))
             caller_name = next(items_gen)
             items_gen.close()
         except StopIteration:
@@ -52,17 +50,21 @@ class ProtectPrivate(NosorogBaseDecorator, metaclass=ProtectPrivateMeta):
         return caller_name
 
     def __block_if_not_self(self, fn):
-        if not bool(self.__search_caller(r'self\.{name}\('.format(name=self.func.__name__), fn)):
+        func = lambda item, method_: False if method_.group().startswith(' self') else True
+        if self.__search_caller(fn, func):
             raise NosorogWrongPlaceCallError(NosorogExceptionMessages.use_self)
 
     def __block_if_not_in_list(self, fn):
-        if self.__search_caller(r'\.{name}\('.format(name=self.func.__name__), fn) not in self.attrs:
+        func = lambda item, method_: item.function
+        if self.__search_caller(fn, func) not in self.attrs:
             raise NosorogWrongPlaceCallError
 
     def __block_if_wrong_method(self, fn):
-        if self.__search_caller(r'\.{name}\('.format(name=self.func.__name__), fn) != self.attrs:
+        func = lambda item, method_: item.function
+        if self.__search_caller(fn, func) != self.attrs:
             raise NosorogWrongPlaceCallError
 
-    def __block_if_mangled(self, fn, *, mangled_name):
-        if self.__search_caller(mangled_name, fn[:10]):
+    def __block_if_mangled(self, fn):
+        func = lambda item, method_: False if '.__' in method_.group() else True
+        if self.__search_caller(fn, func):
             raise NosorogMangledNameError
