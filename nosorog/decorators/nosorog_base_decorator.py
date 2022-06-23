@@ -14,7 +14,7 @@ class NosorogBaseDecorator:
     def __call__(self, obj, *args, **kwargs):
         try:
             result = self.func(obj, *args, **kwargs)
-        except Exception as e:
-            raise e
+        except Exception as ex:
+            raise ex
         else:
             return result
