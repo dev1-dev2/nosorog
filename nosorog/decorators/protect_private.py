@@ -4,7 +4,7 @@ import re
 from nosorog.decorators.nosorog_base_decorator import NosorogBaseDecorator
 from nosorog.exceptions.mixins.nosorog_exception_messages import NosorogExceptionMessages
 from nosorog.exceptions import NosorogMangledNameError, NosorogWrongPlaceCallError, NosorogWentWrongError, \
-                                    NosorogFakeError
+    NosorogFakeError
 from nosorog.decorators.metaclasses.protect_private_meta import ProtectPrivateMeta
 
 
@@ -26,21 +26,21 @@ class ProtectPrivate(NosorogBaseDecorator, metaclass=ProtectPrivateMeta):
 
         protection_props = {
             'block_if_not_self': (
-                                    lambda item, method_: NosorogFakeError if method_.group().startswith(' self')
-                                    else NosorogWrongPlaceCallError,
-                                    NosorogExceptionMessages.use_self,
-                                  ),
+                lambda item, method_: NosorogFakeError if method_.group().startswith(' self')
+                else NosorogWrongPlaceCallError,
+                NosorogExceptionMessages.use_self,
+            ),
             'block_if_wrong_method': (
-                                    lambda item, method_: NosorogFakeError if item.function == self.attrs
-                                    else NosorogWrongPlaceCallError, None,
+                lambda item, method_: NosorogFakeError if item.function == self.attrs
+                else NosorogWrongPlaceCallError, None,
             ),
             'block_if_not_in_list': (
-                                    lambda item, method_: NosorogFakeError if item.function in self.attrs
-                                    else NosorogWrongPlaceCallError, None,
+                lambda item, method_: NosorogFakeError if item.function in self.attrs
+                else NosorogWrongPlaceCallError, None,
             ),
             'block_if_mangled': (
-                                    lambda item, method_: NosorogFakeError if '.__' in method_.group()
-                                    else NosorogMangledNameError, None,
+                lambda item, method_: NosorogFakeError if '.__' in method_.group()
+                else NosorogMangledNameError, None,
             ),
         }
 
@@ -60,11 +60,16 @@ class ProtectPrivate(NosorogBaseDecorator, metaclass=ProtectPrivateMeta):
 
     def __search_caller(self, fn, func):
         try:
-            items_gen = (func(item, re.search(self.regexp, item.code_context[0])) for item in fn if
-                         re.search(self.regexp, item.code_context[0]))
-            caller_name = next(items_gen)
-            items_gen.close()
+            exception_gen = (func(item, re.search(self.regexp, item.code_context[0])) for item in fn if
+                             re.search(self.regexp, item.code_context[0]))
+            exception_type = next(exception_gen)
+            exception_gen.close()
         except StopIteration:
-            caller_name = None
+            raise NosorogWentWrongError("The method that called the decorated method was not found.")
+        except Exception as ex:
+            raise NosorogWentWrongError("Something wrong with iteration through call stack."
+                                        "The original exception was: '{exc_type}{divider}{exc_msg}'"
+                                        .format(exc_type=ex.__class__.__name__, divider=": " * bool(str(ex)),
+                                                exc_msg=str(ex)))
 
-        return caller_name
+        return exception_type
