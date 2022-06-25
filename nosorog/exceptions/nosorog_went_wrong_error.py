@@ -6,10 +6,24 @@ class NosorogWentWrongError(Exception, metaclass=NosorogWentWrongErrorMeta):
 
     __module__ = Exception.__module__
 
-    def __init__(self, message='Something broken.', *, errors=None, **kwargs):
-        self.message = message
+    def __init__(self, /, message='Something broken.', *, original_exc=None, errors=None, **kwargs):
+        self.message = self.format_message(message=message, original_exc=original_exc)
         self.errors = errors
         self.payload = kwargs
 
     def __str__(self):
-        return self.message if self.message else ''
+        return self.message or ''
+
+    @staticmethod
+    def format_message(message, original_exc):
+        if original_exc:
+            message = '{message} The original exception was: "{exc_type}{divider}{exc_msg}"'.format(
+                message=message,
+                exc_type=original_exc.__class__.__name__,
+                divider=": " * bool(str(original_exc)),
+                exc_msg=str(original_exc)
+            )
+        else:
+            message = message
+
+        return message
