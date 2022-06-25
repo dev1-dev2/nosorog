@@ -77,9 +77,6 @@ class ProtectPrivate(NosorogBaseDecorator, metaclass=ProtectPrivateMeta):
         except StopIteration:
             raise NosorogWentWrongError("The method that called the decorated method was not found.")
         except Exception as ex:
-            raise NosorogWentWrongError("Something wrong with iteration through call stack."
-                                        "The original exception was: '{exc_type}{divider}{exc_msg}'"
-                                        .format(exc_type=ex.__class__.__name__, divider=": " * bool(str(ex)),
-                                                exc_msg=str(ex)))
+            raise NosorogWentWrongError("Something wrong with iteration through call stack.", original_exc=ex)
 
         return exception_type
