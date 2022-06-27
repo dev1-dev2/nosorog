@@ -16,6 +16,8 @@ class NosorogWentWrongError(Exception, metaclass=NosorogWentWrongErrorMeta):
 
     @staticmethod
     def format_message(message, original_exc):
+        if not message and original_exc:
+            message = 'No especial message provided.'
         if original_exc:
             message = '{message} The original exception was: "{exc_type}{divider}{exc_msg}"'.format(
                 message=message,

@@ -11,6 +11,8 @@ class NosorogMangledNameError(NosorogWentWrongError, NosorogExceptionMessages):
         self.payload = kwargs
 
     def format_message(self, message):
+        if not message:
+            message = 'No especial message provided.'
         message = '{message}{divider}{custom_msg}'.format(
             message=self.mangled_call_blocked,
             divider=": " * bool(str(message)),
