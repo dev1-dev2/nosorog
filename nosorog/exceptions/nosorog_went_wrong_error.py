@@ -6,7 +6,7 @@ class NosorogWentWrongError(Exception, metaclass=NosorogWentWrongErrorMeta):
 
     __module__ = Exception.__module__
 
-    def __init__(self, /, message='Something broken.', *, original_exc=None, errors=None, **kwargs):
+    def __init__(self, message='Something broken.', *, original_exc=None, errors=None, **kwargs):
         self.message = self.format_message(message=message, original_exc=original_exc)
         self.errors = errors
         self.payload = kwargs
