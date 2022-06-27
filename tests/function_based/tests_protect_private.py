@@ -23,7 +23,9 @@ class TestProtectPrivateDecorator(unittest.TestCase, Messages):
                         msg=self.msg_wrong_exc)
 
     def test_protect_private_decorator_bypass_allowed_list_func_name(self):
-        self.assertTrue(self.instance.var_1.public_func() == self.instance.var_1.var, msg="The decorator does not bypass allowed methods.")
+        self.assertTrue(self.instance.var_1.public_func() == self.instance.var_1.var,
+                        msg="The decorator does not bypass allowed methods.")
 
     def test_protect_private_decorator_bypass_allowed_list_with_self(self):
-        self.assertTrue(self.instance.var_1.alter_func_2() == self.instance.var_1.var, msg="The decorator does not bypass methods with self.")
+        self.assertTrue(self.instance.var_1.alter_func_2() == self.instance.var_1.var,
+                        msg="The decorator does not bypass methods with self.")
