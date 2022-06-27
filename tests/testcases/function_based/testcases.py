@@ -1,7 +1,7 @@
 from nosorog.decorators.function_based import protect_private
 
 
-class A:
+class Example1:
     var = 1
 
     @protect_private(allowed_list=['public_func'])
@@ -22,6 +22,6 @@ class A:
         return self.__func_2()
 
 
-class B:
-    def __init__(self, a):
-        self.a = a
+class Example2:
+    def __init__(self, value):
+        self.var_1 = value

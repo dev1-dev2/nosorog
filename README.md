@@ -114,7 +114,8 @@ Usage of dunder methods ( `__method()` ) protects the code avoiding direct acces
 
 ```python
 class Example:
-    def __get_data(self):
+    @staticmethod
+    def __get_data():
         return 1
 
 >>> Example().__get_data()  # AttributeError: 'Example' object has no attribute '__get_data'
@@ -172,6 +173,7 @@ class Example:
 
 class Trusted:
     # Place it to the same file as described in the decorator usage.
+    @staticmethod
     def safe_method():
         return Example()._Example__get_data()  # 1
 ```
@@ -197,7 +199,7 @@ It is converts all the ids in the list if possible or throws the `TypeError`.
 ```python
 class Example:
     @protect_ids(id_names=['user_id', 'pk'])
-    def some_method(user_id=None, pk=None)
+    def some_method(self, user_id=None, pk=None)
         pass
 ```
 
