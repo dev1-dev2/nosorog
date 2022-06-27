@@ -10,25 +10,25 @@ class ProtectedDicts:
     }
 
     @copy_dicts.shallow_all
-    def method_1(self, a, b=None):
-        return a, b
+    def method_1(self, dict_a, dict_b=None):
+        return dict_a, dict_b
 
     @copy_dicts.shallow_args
-    def method_2(self, a, b=None):
-        return a, b
+    def method_2(self, dict_a, dict_b=None):
+        return dict_a, dict_b
 
     @copy_dicts.shallow_kwargs
-    def method_3(self, a, b=None):
-        return a, b
+    def method_3(self, dict_a, dict_b=None):
+        return dict_a, dict_b
 
     @copy_dicts.deep_all
-    def method_4(self, a, b=None):
-        return a, b
+    def method_4(self, dict_a, dict_b=None):
+        return dict_a, dict_b
 
     @copy_dicts.deep_args
-    def method_5(self, a, b=None):
-        return a, b
+    def method_5(self, dict_a, dict_b=None):
+        return dict_a, dict_b
 
     @copy_dicts.deep_kwargs
-    def method_6(self, a, b=None):
-        return a, b
+    def method_6(self, dict_a, dict_b=None):
+        return dict_a, dict_b
