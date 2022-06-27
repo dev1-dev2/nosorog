@@ -15,24 +15,24 @@ class TestCopyDictDecorator(unittest.TestCase):
 
     def test_copy_dict_decorator_shallow_copy(self):
         @copy_dicts(deep_copy=False)
-        def func(a, b=None):
-            self.assertFalse(a is self.item_dict, msg=self.msg)
-            self.assertFalse(b is self.item_dict, msg=self.msg)
-            self.assertTrue(a["key"] is self.item_dict["key"], msg=self.msg)
-            if b is not None:
-                self.assertTrue(b["key"] is self.item_dict["key"], msg=self.msg)
+        def func(dict_a, dict_b=None):
+            self.assertFalse(dict_a is self.item_dict, msg=self.msg)
+            self.assertFalse(dict_b is self.item_dict, msg=self.msg)
+            self.assertTrue(dict_a["key"] is self.item_dict["key"], msg=self.msg)
+            if dict_b is not None:
+                self.assertTrue(dict_b["key"] is self.item_dict["key"], msg=self.msg)
 
-        func(self.item_dict, b=self.item_dict)
-        func(self.item_dict, b=None)
+        func(self.item_dict, dict_b=self.item_dict)
+        func(self.item_dict, dict_b=None)
 
     def test_copy_dict_decorator_deep_copy(self):
         @copy_dicts(deep_copy=True)
-        def func(a, b=None):
-            self.assertFalse(a is self.item_dict, msg=self.msg)
-            self.assertFalse(b is self.item_dict, msg=self.msg)
-            self.assertFalse(a["key"] is self.item_dict["key"], msg=self.msg)
-            if b is not None:
-                self.assertFalse(b["key"] is self.item_dict["key"], msg=self.msg)
+        def func(dict_a, dict_b=None):
+            self.assertFalse(dict_a is self.item_dict, msg=self.msg)
+            self.assertFalse(dict_b is self.item_dict, msg=self.msg)
+            self.assertFalse(dict_a["key"] is self.item_dict["key"], msg=self.msg)
+            if dict_b is not None:
+                self.assertFalse(dict_b["key"] is self.item_dict["key"], msg=self.msg)
 
-        func(self.item_dict, b=self.item_dict)
-        func(self.item_dict, b=None)
+        func(self.item_dict, dict_b=self.item_dict)
+        func(self.item_dict, dict_b=None)
