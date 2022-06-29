@@ -3,3 +3,4 @@ from nosorog.exceptions.nosorog_wrong_place_call_error import NosorogWrongPlaceC
 from nosorog.exceptions.nosorog_went_wrong_error import NosorogWentWrongError
 from nosorog.exceptions.nosorog_type_error import NosorogTypeError
 from nosorog.exceptions.nosorog_fake_error import NosorogFakeError
+from nosorog.exceptions.nosorog_split_access_exception import NosorogSplitAccessException
