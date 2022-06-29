@@ -23,7 +23,7 @@ class ProtectPrivate(BaseProtect, metaclass=ProtectPrivateMeta):
         func, message = self.get_props(self.protection_method)
 
         try:
-            raise super(ProtectPrivate, self)._BaseProtect__search_caller(fn, func)(message)
+            raise self._BaseProtect__search_caller(fn, func)(message)
         except NosorogFakeError:
             pass
 
