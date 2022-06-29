@@ -36,7 +36,6 @@ class TestExceptionMessages(unittest.TestCase):
     def test_went_wrong_error_with_custom_message(self):
         with self.assertRaises(NosorogWentWrongError, msg="Wrong type of Exception raised.") as context:
             throw_exception(NosorogWentWrongError, with_msg=True)
-        print(str(context.exception))
         self.assertTrue('Something broken. The original exception was: "Exception: Test message."'
                         in str(context.exception), msg="Wrong Exception message.")
 
