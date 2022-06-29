@@ -2,9 +2,7 @@ import inspect
 
 from nosorog.decorators.base_protect import BaseProtect
 from nosorog.decorators.metaclasses.protect_private_meta import ProtectPrivateMeta
-from nosorog.exceptions.mixins.nosorog_exception_messages import NosorogExceptionMessages
-from nosorog.exceptions import NosorogMangledNameError, NosorogWrongPlaceCallError, NosorogWentWrongError, \
-    NosorogFakeError
+from nosorog.exceptions import NosorogWentWrongError, NosorogFakeError
 
 
 class ProtectPrivate(BaseProtect, metaclass=ProtectPrivateMeta):

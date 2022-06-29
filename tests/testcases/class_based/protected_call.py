@@ -1,4 +1,4 @@
-from nosorog.decorators.protected_call import ProtectedCall as protected_call  # TODO refactor
+from nosorog.decorators import protected_call
 
 
 class ProtectedCallUsage:
